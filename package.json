@@ -1,6 +1,6 @@
 {
   "name": "@mopjs/dzdownloadernode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library to download deezer tracks",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -8,19 +8,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "build" : "tsc",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm run lint",
-    "preversion" : "npm run lint",
-    "version" : "npm run format && git add -A src",
-    "postversion" : "git push && git push --tags"
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "deezer"
   ],
   "author": "Malaury DUTOUR",
   "license": "ISC",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "devDependencies": {
     "prettier": "^2.2.1",
     "tslint": "^6.1.3",

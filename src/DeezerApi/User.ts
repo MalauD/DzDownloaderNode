@@ -1,7 +1,6 @@
 import axios, { AxiosProxyConfig } from 'axios'
 import { DeezerDefaultHeader, DeezerDefaultParams } from './DefaultParams'
 
-
 export class User {
     Arl: string
     Sid: string
