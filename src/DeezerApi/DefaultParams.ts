@@ -1,5 +1,5 @@
 export const DeezerDefaultParams = {
-    api_version: "1.0",
+    api_version: '1.0',
     input: '3',
 }
 
