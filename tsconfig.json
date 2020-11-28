@@ -6,7 +6,6 @@
       "moduleResolution": "Node",
       "declaration": true,
       "outDir": "./lib",
-      "watch": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/__tests__/*"]

@@ -38,6 +38,7 @@ const DecryptBuffer = (SourceBuffer: Buffer, TrackToDecrypt: Track) => {
 export const GetDownloadStream = async (TrackToDownload: Track, LoggedUser: User) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
         responseType: 'arraybuffer',
+        proxy: LoggedUser.Proxy,
         headers: {
             ...DeezerDefaultHeader,
             cookie: LoggedUser.GetCookie(),
