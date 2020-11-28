@@ -1,0 +1,13 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+      "target": "ES2020",
+      "module": "CommonJS",
+      "moduleResolution": "Node",
+      "declaration": true,
+      "outDir": "./lib",
+      "watch": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "**/__tests__/*"]
+}
