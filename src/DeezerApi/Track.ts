@@ -10,7 +10,7 @@ interface TrackApiResult {
     SNG_TITLE: string
     ALB_TITLE: string
     ART_NAME: string
-    TRACK_NUMBER: number
+    TRACK_NUMBER: string
     MD5_ORIGIN: string
     FILESIZE_MP3_320: number
     FILESIZE_MP3_128: number
@@ -30,12 +30,14 @@ export class Track {
     Title: string
     Album: string
     Artist: string
+    TrackNumber: number
 
     constructor(ApiResult: TrackApiResult) {
         this.Id = ApiResult.SNG_ID
         this.Md5 = ApiResult.MD5_ORIGIN
         this.MediaVersion = ApiResult.MEDIA_VERSION
         this.Format = ApiResult.FILESIZE_MP3_320 === 0 ? TrackQualities.MP3_128 : TrackQualities.MP3_320
+        this.TrackNumber = parseInt(ApiResult.TRACK_NUMBER, 10)
         ;(this.Title = ApiResult.SNG_TITLE), (this.Album = ApiResult.ALB_TITLE), (this.Artist = ApiResult.ART_NAME)
     }
 
