@@ -75,6 +75,16 @@ export class User {
 
         return res.data.results.USER.USER_ID !== 0
     }
+
+    EnsureConnection = async () => {
+        const IsConnected = await this.IsConnected();
+        if(!IsConnected) {
+            await this.InitSession();
+            await this.GetUserData();
+        }
+
+        return IsConnected;
+    }
 }
 
 export const CreateUser = async (Arl: string, HttpProxy?: AxiosProxyConfig): Promise<User> => {
