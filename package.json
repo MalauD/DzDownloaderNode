@@ -1,6 +1,6 @@
 {
   "name": "@mopjs/dzdownloadernode",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A library to download deezer tracks",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
