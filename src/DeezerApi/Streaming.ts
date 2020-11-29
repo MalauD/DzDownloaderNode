@@ -1,32 +1,32 @@
 import axios from 'axios'
 import crypto = require('crypto')
-import BlockStream =  require('block-stream')
-import {Stream, Transform} from 'stream'
-import {inherits} from 'util'
+import BlockStream = require('block-stream')
+import { Stream, Transform } from 'stream'
+import { inherits } from 'util'
 import { DecryptBlowfish } from '../Tools/Crypto'
 import { DeezerDefaultHeader } from './DefaultParams'
 import { Track } from './Track'
 import { User } from './User'
 
-function DecryptDeezerStream(BlowfishKey: string, options?) : void {
+function DecryptDeezerStream(BlowfishKey: string, options?): void {
     // allow use without new
     if (!(this instanceof DecryptDeezerStream)) {
-      return new DecryptDeezerStream(BlowfishKey, options);
+        return new DecryptDeezerStream(BlowfishKey, options)
     }
     this.BlowfishKey = BlowfishKey
-    this.Iter = 0;
+    this.Iter = 0
     // init Transform
-    Transform.call(this, options);
+    Transform.call(this, options)
 }
-inherits(DecryptDeezerStream, Transform);
-  
+inherits(DecryptDeezerStream, Transform)
+
 DecryptDeezerStream.prototype._transform = function (chunk, enc, cb) {
-    if (this.Iter % 3 > 0) this.push(chunk);
+    if (this.Iter % 3 > 0) this.push(chunk)
     else this.push(DecryptBlowfish(this.BlowfishKey, chunk), 'binary')
 
-    this.Iter = this.Iter + 1;
-    cb();
-};
+    this.Iter = this.Iter + 1
+    cb()
+}
 
 export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
@@ -38,5 +38,5 @@ export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: Use
         },
     })
     const block = new BlockStream(2048)
-    stream.data.pipe(block).pipe(new DecryptDeezerStream(TrackToDownload.GetBlowfishKey())).pipe(OutStream);
+    stream.data.pipe(block).pipe(new DecryptDeezerStream(TrackToDownload.GetBlowfishKey())).pipe(OutStream)
 }
