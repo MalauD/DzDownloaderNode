@@ -54,6 +54,27 @@ export class User {
         this.Token = res.data.results.checkForm
         return res.data.results
     }
+
+    IsConnected = async () => {
+        const res = await axios.post(
+            'http://www.deezer.com/ajax/gw-light.php',
+            {},
+            {
+                params: {
+                    ...DeezerDefaultParams,
+                    api_token: 'null',
+                    method: 'deezer.getUserData',
+                },
+                proxy: this.Proxy,
+                headers: {
+                    ...DeezerDefaultHeader,
+                    cookie: 'arl=' + this.Arl + '; sid=' + this.Sid,
+                },
+            }
+        )
+
+        return res.data.results.USER.USER_ID !== 0
+    }
 }
 
 export const CreateUser = async (Arl: string, HttpProxy?: AxiosProxyConfig): Promise<User> => {
