@@ -46,7 +46,7 @@ export const GetDecryptedStream = async (
         headers: {
             ...DeezerDefaultHeader,
             cookie: LoggedUser.GetCookie(),
-            Range: `bytes=${options.Start}-${options.End}`,
+            Range: options ? `bytes=${options.Start}-${options.End}` : undefined,
         },
     })
     const block = new BlockStream(2048)
