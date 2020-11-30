@@ -8,6 +8,11 @@ import { DeezerDefaultHeader } from './DefaultParams'
 import { Track } from './Track'
 import { User } from './User'
 
+interface StreamOptions {
+    Start: number,
+    End: number
+}
+
 function DecryptDeezerStream(BlowfishKey: string, options?): void {
     // allow use without new
     if (!(this instanceof DecryptDeezerStream)) {
@@ -28,17 +33,18 @@ DecryptDeezerStream.prototype._transform = function (chunk, enc, cb) {
     cb()
 }
 
-export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream, OnEnd?: () => void) => {
+export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream, options?: StreamOptions,OnEnd?: () => void) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
         responseType: 'stream',
         proxy: LoggedUser.Proxy,
         headers: {
             ...DeezerDefaultHeader,
             cookie: LoggedUser.GetCookie(),
+            Range: `bytes=${options.Start}-${options.End}`
         },
     })
     const block = new BlockStream(2048)
-    stream.data.on('end', OnEnd)
+    if(OnEnd) stream.data.on('end', OnEnd)
     stream.data.pipe(block).pipe(new DecryptDeezerStream(TrackToDownload.GetBlowfishKey())).pipe(OutStream)
 
     return { TotalLength: stream.headers['content-length'] }
