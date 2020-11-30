@@ -27,6 +27,7 @@ export class Track {
     Md5: string
     MediaVersion: number
     Format: TrackQualities
+    Size: number
     Title: string
     Album: string
     Artist: string
@@ -37,6 +38,7 @@ export class Track {
         this.Md5 = ApiResult.MD5_ORIGIN
         this.MediaVersion = ApiResult.MEDIA_VERSION
         this.Format = ApiResult.FILESIZE_MP3_320 === 0 ? TrackQualities.MP3_128 : TrackQualities.MP3_320
+        this.Size = ApiResult.FILESIZE_MP3_320 === 0 ? ApiResult.FILESIZE_MP3_128 : ApiResult.FILESIZE_MP3_320
         this.TrackNumber = parseInt(ApiResult.TRACK_NUMBER, 10)
         ;(this.Title = ApiResult.SNG_TITLE), (this.Album = ApiResult.ALB_TITLE), (this.Artist = ApiResult.ART_NAME)
     }
