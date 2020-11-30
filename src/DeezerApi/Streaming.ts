@@ -28,7 +28,7 @@ DecryptDeezerStream.prototype._transform = function (chunk, enc, cb) {
     cb()
 }
 
-export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream) => {
+export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream, OnEnd?: () => void) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
         responseType: 'stream',
         proxy: LoggedUser.Proxy,
@@ -38,5 +38,6 @@ export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: Use
         },
     })
     const block = new BlockStream(2048)
+    stream.data.on('end', OnEnd)
     stream.data.pipe(block).pipe(new DecryptDeezerStream(TrackToDownload.GetBlowfishKey())).pipe(OutStream)
 }
