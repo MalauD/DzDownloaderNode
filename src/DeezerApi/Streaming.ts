@@ -40,4 +40,6 @@ export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: Use
     const block = new BlockStream(2048)
     stream.data.on('end', OnEnd)
     stream.data.pipe(block).pipe(new DecryptDeezerStream(TrackToDownload.GetBlowfishKey())).pipe(OutStream)
+
+    return {TotalLength: stream.headers["Content-Length"]}
 }
