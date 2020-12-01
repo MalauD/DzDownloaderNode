@@ -1,4 +1,4 @@
-import axiosRetry from 'axios-retry'
+const axiosRetry = require('axios-retry');
 import Axios from 'axios'
 Axios.defaults.withCredentials = true
 axiosRetry(Axios)
