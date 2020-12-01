@@ -33,7 +33,13 @@ DecryptDeezerStream.prototype._transform = function (chunk, enc, cb) {
     cb()
 }
 
-export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream, OnEnd?: () => void, RequestOptions?: IAxiosRetryConfig) => {
+export const GetDecryptedStream = async (
+    TrackToDownload: Track,
+    LoggedUser: User,
+    OutStream: Stream,
+    OnEnd?: () => void,
+    RequestOptions?: IAxiosRetryConfig
+) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
         responseType: 'stream',
         proxy: LoggedUser.Proxy,
@@ -41,7 +47,7 @@ export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: Use
             ...DeezerDefaultHeader,
             cookie: LoggedUser.GetCookie(),
         },
-        "axios-retry": RequestOptions
+        'axios-retry': RequestOptions,
     })
     const block = new BlockStream(2048)
     if (OnEnd) stream.data.on('end', OnEnd)

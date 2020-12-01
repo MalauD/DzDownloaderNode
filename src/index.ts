@@ -1,6 +1,6 @@
-import axiosRetry from 'axios-retry';
+import axiosRetry from 'axios-retry'
 import Axios from 'axios'
 Axios.defaults.withCredentials = true
-axiosRetry(Axios);
+axiosRetry(Axios)
 
 export * from './DeezerApi'

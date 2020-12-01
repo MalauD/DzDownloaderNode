@@ -82,7 +82,7 @@ export const GetTrackById = async (Id: number, LoggedUser: User, RequestOptions?
                 DeezerDefaultHeader,
                 cookie: LoggedUser.GetCookie(),
             },
-            "axios-retry": RequestOptions
+            'axios-retry': RequestOptions,
         }
     )
     return new Track(res.data.results)
