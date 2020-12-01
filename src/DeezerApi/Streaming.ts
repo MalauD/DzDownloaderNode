@@ -1,5 +1,4 @@
 import axios from 'axios'
-import crypto = require('crypto')
 import BlockStream = require('block-stream')
 import { Stream, Transform } from 'stream'
 import { inherits } from 'util'
@@ -7,6 +6,7 @@ import { DecryptBlowfish } from '../Tools/Crypto'
 import { DeezerDefaultHeader } from './DefaultParams'
 import { Track } from './Track'
 import { User } from './User'
+import { IAxiosRetryConfig } from 'axios-retry'
 
 interface StreamOptions {
     Start: number
@@ -33,7 +33,7 @@ DecryptDeezerStream.prototype._transform = function (chunk, enc, cb) {
     cb()
 }
 
-export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream, OnEnd?: () => void) => {
+export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: User, OutStream: Stream, OnEnd?: () => void, RequestOptions?: IAxiosRetryConfig) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
         responseType: 'stream',
         proxy: LoggedUser.Proxy,
@@ -41,6 +41,7 @@ export const GetDecryptedStream = async (TrackToDownload: Track, LoggedUser: Use
             ...DeezerDefaultHeader,
             cookie: LoggedUser.GetCookie(),
         },
+        "axios-retry": RequestOptions
     })
     const block = new BlockStream(2048)
     if (OnEnd) stream.data.on('end', OnEnd)

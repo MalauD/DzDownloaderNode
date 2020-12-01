@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import { IAxiosRetryConfig } from 'axios-retry'
 import { User } from './User'
 import { GetAes, GetMd5, GetMd5Bf } from '../Tools/Crypto'
 import { DeezerDefaultHeader, DeezerDefaultParams } from './DefaultParams'
@@ -65,7 +66,7 @@ export class Track {
     }
 }
 
-export const GetTrackById = async (Id: number, LoggedUser: User): Promise<Track> => {
+export const GetTrackById = async (Id: number, LoggedUser: User, RequestOptions?: IAxiosRetryConfig): Promise<Track> => {
     const res = await Axios.post(
         unofficialApiUrl,
         {
@@ -81,6 +82,7 @@ export const GetTrackById = async (Id: number, LoggedUser: User): Promise<Track>
                 DeezerDefaultHeader,
                 cookie: LoggedUser.GetCookie(),
             },
+            "axios-retry": RequestOptions
         }
     )
     return new Track(res.data.results)
