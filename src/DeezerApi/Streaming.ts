@@ -37,7 +37,6 @@ export const GetDecryptedStream = async (
     TrackToDownload: Track,
     LoggedUser: User,
     OutStream: Stream,
-    options?: StreamOptions,
     OnEnd?: () => void
 ) => {
     const stream = await axios.get(TrackToDownload.GetDownloadUrl(), {
@@ -46,7 +45,6 @@ export const GetDecryptedStream = async (
         headers: {
             ...DeezerDefaultHeader,
             cookie: LoggedUser.GetCookie(),
-            Range: options ? `bytes=${options.Start}-${options.End}` : undefined,
         },
     })
     const block = new BlockStream(2048)
