@@ -78,10 +78,9 @@ export class User {
 
     EnsureConnection = async () => {
         const IsConnected = await this.IsConnected()
-        if (!IsConnected) {
-            await this.InitSession()
-            await this.GetUserData()
-        }
+        
+        await this.InitSession();
+        await this.GetUserData();
 
         return IsConnected
     }
