@@ -38,8 +38,8 @@ export class Track {
         this.Id = ApiResult.SNG_ID
         this.Md5 = ApiResult.MD5_ORIGIN
         this.MediaVersion = ApiResult.MEDIA_VERSION
-        this.Format = ApiResult.FILESIZE_MP3_320 === 0 ? TrackQualities.MP3_128 : TrackQualities.MP3_320
-        this.Size = ApiResult.FILESIZE_MP3_320 === 0 ? ApiResult.FILESIZE_MP3_128 : ApiResult.FILESIZE_MP3_320
+        this.Format = true ? TrackQualities.MP3_128 : TrackQualities.MP3_320 // 128kbit/s not available anymore
+        this.Size = true ? ApiResult.FILESIZE_MP3_128 : ApiResult.FILESIZE_MP3_320
         this.TrackNumber = parseInt(ApiResult.TRACK_NUMBER, 10)
         ;(this.Title = ApiResult.SNG_TITLE), (this.Album = ApiResult.ALB_TITLE), (this.Artist = ApiResult.ART_NAME)
     }
